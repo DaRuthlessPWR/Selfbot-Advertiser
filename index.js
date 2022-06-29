@@ -5,6 +5,7 @@
 const { Client } = require('discord.js-selfbot-v13');
 const client = new Client({checkUpdate: false});
 const private_config = require('./configs/private.json')
+const fs = require('fs')
 
 client.on('ready', () => {
     console.log(`[INFO] Logged in as: ${client.user.tag}`);
@@ -16,7 +17,7 @@ client.on('ready', () => {
 });
 
 //--------- CHANNEL ID/CSATORNA ID //---------
-var channelids = ["0", "991644108105981952", "989944084447772675"]
+var channelids = ["0", "991644108105981952", "989944084447772675"] //put 0 at the first array item
 let i = 0
 
 
@@ -32,17 +33,10 @@ client.on("messageCreate", async message => {
 				let workingchannels = client.channels.cache.get(channelids[i])
 				if(workingchannels)
 				{
-					if(!private_config.custom_msg || private_config.custom_msg == "")
-					{
-						console.log("ENG: Hey! U need to add a message to send it! add in the config list please.\nHUN: Hé! Nem adtál hozzá szöveget a konfig listába! Kérlek tedd meg")
-					}
-					else
-					{
-						workingchannels.send(private_config.custom_msg)
-						console.log("[MESSAGE LOG] --------------------- [MESSAGE LOG]")
-						console.log(`Message sent. ID: ${channelids[i]} | Message: ${private_config.custom_msg}`)
-						console.log("[MESSAGE LOG] --------------------- [MESSAGE LOG]")
-					}
+					fs.readFile('./configs/msg.txt', 'utf8', (err, data) => {
+						if(err) return console.log(err)
+						workingchannels.send(data)
+					})
 				}
 			} while(i < channelids.length)
 		}
