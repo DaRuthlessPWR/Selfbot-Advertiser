@@ -1,6 +1,5 @@
 {
 	"profile_token": "Your token here",
 	"profile_id": "Your profile id here",
-	"start_command": "!startmsg",
-	"custom_msg": "TEST mate#1337"
+	"start_command": "!startmsg"
 }
